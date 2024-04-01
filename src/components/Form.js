@@ -86,9 +86,9 @@ function FileUpload() {
                     <input type="file" onChange={handleFileChange} />
                     <Button variant="contained" onClick={extractLinks} style={{ marginLeft: '10px' }}>Extract Links</Button>
                     <Button variant="contained" onClick={downloadExcelFile} style={{ marginLeft: '10px' }}>Download Excel File</Button>
-                    <TableContainer style={{ margin: "15px" }}>
+                    <TableContainer style={{ marginTop:"15px",display: "flex", justifyContent: "center",maxHeight:"540px", overflowY: 'auto', scrollbarWidth: 'none', width: '100%' }}>
                         <Table>
-                            <TableHead>
+                            <TableHead style={{ position: "sticky", top: 0, zIndex: 1, backgroundColor: theme.palette.background.paper,width:"100%" }}>
                                 <TableRow>
                                     <TableCell style={{width:"75px"}}>SR. No.</TableCell>
                                     <TableCell>Link</TableCell>
@@ -111,7 +111,8 @@ function FileUpload() {
                                                     backgroundColor: selectedStates[index] === 'Pending' ? 'red' :
                                                         selectedStates[index] === 'Done' ? 'green' :
                                                             selectedStates[index] === 'Revisit' ? 'blue' : 'red',
-                                                    width: "150px"
+                                                    width: "110px",
+                                                    height:"30px"
                                                 }}
                                             >
                                                 <MenuItem value="Pending" style={{ color: 'red' }}>Pending</MenuItem>
