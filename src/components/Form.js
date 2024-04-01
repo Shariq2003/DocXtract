@@ -92,7 +92,7 @@ function FileUpload() {
                                 <TableRow>
                                     <TableCell style={{width:"75px"}}>SR. No.</TableCell>
                                     <TableCell>Link</TableCell>
-                                    <TableCell>Completion State</TableCell>
+                                    <TableCell style={{width:"150px"}}>Completion State</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
