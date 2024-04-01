@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Button, Container, Typography, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, ThemeProvider, createTheme } from '@mui/material';
+import { Button, Container, Typography, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, ThemeProvider, createTheme, Select, MenuItem } from '@mui/material';
+
 import { saveAs } from 'file-saver';
 import * as XLSX from 'xlsx';
 
@@ -55,6 +56,14 @@ function FileUpload() {
         saveAs(fileData, 'links.xlsx');
     };
 
+    const handleCompletionStateChange = (e, index) => {
+        const { value } = e.target;
+        const updatedLinks = [...links];
+        updatedLinks[index].completionState = value;
+        setLinks(updatedLinks);
+    };
+
+
     const theme = createTheme({
         palette: {
             mode: 'dark',
@@ -90,7 +99,18 @@ function FileUpload() {
                                     <TableRow key={index}>
                                         <TableCell>{index+1}</TableCell>
                                         <TableCell><a href={link.url} target="_blank" rel="noopener noreferrer" style={{color:"white"}}>{link.url}</a></TableCell>
-                                        <TableCell>{link.completionState}</TableCell>
+                                        <TableCell>
+                                            <Select
+                                                value={link.completionState}
+                                                onChange={(e) => handleCompletionStateChange(e, index)}
+                                                style={{ color: "white",width:"180px" }}
+                                            >
+                                                <MenuItem value="Pending">Pending</MenuItem>
+                                                <MenuItem value="Revisit">Revisit</MenuItem>
+                                                <MenuItem value="Done">Done</MenuItem>
+                                            </Select>
+                                        </TableCell>
+
                                     </TableRow>
                                 ))}
                             </TableBody>
