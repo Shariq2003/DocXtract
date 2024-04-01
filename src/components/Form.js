@@ -71,7 +71,7 @@ function FileUpload() {
         <ThemeProvider theme={theme}>
             <Container style={{ marginTop: "35px", marginBottom: "15px", display: "flex", flexDirection: "column", alignItems: "center" }}>
                 <Typography variant="h3" style={{ marginBottom: '20px', color: "white" }}>DocXtract</Typography>
-                <Paper style={{ padding: '20px', width: "1500px" }}>
+                <Paper style={{ padding: '20px', width: "1000px" }}>
                     <Typography variant="h5" style={{ marginBottom: '10px' }}>Upload PDF</Typography>
                     <input type="file" onChange={handleFileChange} />
                     <Button variant="contained" onClick={extractLinks} style={{ marginLeft: '10px' }}>Extract Links</Button>
