@@ -7,6 +7,7 @@ import * as XLSX from 'xlsx';
 function FileUpload() {
     const [file, setFile] = useState(null);
     const [links, setLinks] = useState([]);
+    const [selectedStates, setSelectedStates] = useState({});
 
     const handleFileChange = (e) => {
         const selectedFile = e.target.files[0];
@@ -85,7 +86,7 @@ function FileUpload() {
                     <input type="file" onChange={handleFileChange} />
                     <Button variant="contained" onClick={extractLinks} style={{ marginLeft: '10px' }}>Extract Links</Button>
                     <Button variant="contained" onClick={downloadExcelFile} style={{ marginLeft: '10px' }}>Download Excel File</Button>
-                    <TableContainer style={{margin:"15px"}}>
+                    <TableContainer style={{ margin: "15px" }}>
                         <Table>
                             <TableHead>
                                 <TableRow>
@@ -97,20 +98,27 @@ function FileUpload() {
                             <TableBody>
                                 {links.map((link, index) => (
                                     <TableRow key={index}>
-                                        <TableCell>{index+1}</TableCell>
-                                        <TableCell><a href={link.url} target="_blank" rel="noopener noreferrer" style={{color:"white"}}>{link.url}</a></TableCell>
+                                        <TableCell>{index + 1}</TableCell>
+                                        <TableCell><a href={link.url} target="_blank" rel="noopener noreferrer" style={{ color: "white" }}>{link.url}</a></TableCell>
                                         <TableCell>
                                             <Select
-                                                value={link.completionState}
-                                                onChange={(e) => handleCompletionStateChange(e, index)}
-                                                style={{ color: "white",width:"180px" }}
+                                                value={selectedStates[index] || link.completionState}
+                                                onChange={(e) => {
+                                                    const newState = e.target.value;
+                                                    setSelectedStates({ ...selectedStates, [index]: newState });
+                                                }}
+                                                style={{
+                                                    backgroundColor: selectedStates[index] === 'Pending' ? 'red' :
+                                                        selectedStates[index] === 'Done' ? 'green' :
+                                                            selectedStates[index] === 'Revisit' ? 'blue' : 'red',
+                                                    width: "150px"
+                                                }}
                                             >
-                                                <MenuItem value="Pending">Pending</MenuItem>
-                                                <MenuItem value="Revisit">Revisit</MenuItem>
-                                                <MenuItem value="Done">Done</MenuItem>
+                                                <MenuItem value="Pending" style={{ color: 'red' }}>Pending</MenuItem>
+                                                <MenuItem value="Revisit" style={{ color: 'blue' }}>Revisit</MenuItem>
+                                                <MenuItem value="Done" style={{ color: 'green' }}>Done</MenuItem>
                                             </Select>
                                         </TableCell>
-
                                     </TableRow>
                                 ))}
                             </TableBody>
