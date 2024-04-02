@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Button, Container, Typography, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, ThemeProvider, createTheme, Select, MenuItem } from '@mui/material';
-
+import { styled } from '@mui/material/styles';
 import { saveAs } from 'file-saver';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import * as XLSX from 'xlsx';
 
 function FileUpload() {
@@ -46,7 +47,17 @@ function FileUpload() {
             newData[cellAddress].l = {
                 Target: '',
                 Tooltip: '',
-                text: completionStateOptions.join(',')
+                DataValidation: {
+                    Type: 'dropdown',
+                    AllowBlank: true,
+                    Formula1: completionStateOptions.join(','),
+                    ShowErrorMessage: true,
+                    ErrorTitle: '',
+                    Error: 'Please select a valid option.',
+                    ShowInputMessage: true,
+                    PromptTitle: '',
+                    Prompt: 'Select a completion state from the dropdown.',
+                },
             };
         });
 
@@ -63,7 +74,7 @@ function FileUpload() {
         updatedLinks[index].completionState = value;
         setLinks(updatedLinks);
     };
-
+    
 
     const theme = createTheme({
         palette: {
@@ -77,13 +88,35 @@ function FileUpload() {
         },
     });
 
+    const VisuallyHiddenInput = styled('input')({
+        clip: 'rect(0 0 0 0)',
+        clipPath: 'inset(50%)',
+        height: 1,
+        overflow: 'hidden',
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        whiteSpace: 'nowrap',
+        width: 1,
+    });
+
     return (
         <ThemeProvider theme={theme}>
             <Container style={{ marginTop: "35px", marginBottom: "15px", display: "flex", flexDirection: "column", alignItems: "center" }}>
                 <Typography variant="h3" style={{ marginBottom: '20px', color: "white" }}>DocXtract</Typography>
                 <Paper style={{ padding: '20px', width: "1000px" }}>
                     <Typography variant="h5" style={{ marginBottom: '10px' }}>Upload PDF</Typography>
-                    <input type="file" onChange={handleFileChange} />
+                    {/* <input type="file" onChange={handleFileChange} /> */}
+                    <Button
+                        component="label"
+                        role={undefined}
+                        variant="contained"
+                        tabIndex={-1}
+                        startIcon={<CloudUploadIcon />}
+                    >
+                        Upload file
+                        <VisuallyHiddenInput type="file" onChange={handleFileChange}/>
+                    </Button>
                     <Button variant="contained" onClick={extractLinks} style={{ marginLeft: '10px' }}>Extract Links</Button>
                     <Button variant="contained" onClick={downloadExcelFile} style={{ marginLeft: '10px' }}>Download Excel File</Button>
                     <TableContainer style={{ marginTop:"15px",display: "flex", justifyContent: "center",maxHeight:"540px", overflowY: 'auto', scrollbarWidth: 'none', width: '100%' }}>
