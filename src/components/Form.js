@@ -74,7 +74,7 @@ function FileUpload() {
         updatedLinks[index].completionState = value;
         setLinks(updatedLinks);
     };
-    
+
 
     const theme = createTheme({
         palette: {
@@ -110,6 +110,7 @@ function FileUpload() {
                     <Button
                         component="label"
                         role={undefined}
+                        size='small'
                         variant="contained"
                         tabIndex={-1}
                         startIcon={<CloudUploadIcon />}
@@ -117,8 +118,8 @@ function FileUpload() {
                         Upload file
                         <VisuallyHiddenInput type="file" onChange={handleFileChange}/>
                     </Button>
-                    <Button variant="contained" onClick={extractLinks} style={{ marginLeft: '10px' }}>Extract Links</Button>
-                    <Button variant="contained" onClick={downloadExcelFile} style={{ marginLeft: '10px' }}>Download Excel File</Button>
+                    <Button size='small' variant="contained" onClick={extractLinks} style={{ marginLeft: '10px' }}>Extract Links</Button>
+                    <Button size='small' variant="contained" onClick={downloadExcelFile} style={{ marginLeft: '10px' }}>Download Excel File</Button>
                     <TableContainer style={{ marginTop:"15px",display: "flex", justifyContent: "center",maxHeight:"540px", overflowY: 'auto', scrollbarWidth: 'none', width: '100%' }}>
                         <Table>
                             <TableHead style={{ position: "sticky", top: 0, zIndex: 1, backgroundColor: theme.palette.background.paper,width:"100%" }}>
